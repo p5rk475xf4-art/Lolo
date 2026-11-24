@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لعلا 💌</title>
+<style>
+:root{--bg:#fff1f3;--card:#ffffff;--text:#4a1f2b;--sub:#8a5a66;--accent:#e0577a;--accent2:#f7c6d1;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#2a1319;--card:#3a1b24;--text:#ffe9ee;--sub:#e2aab8;--accent:#ff7b9e;--accent2:#5a2a37;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#2a1319;--card:#3a1b24;--text:#ffe9ee;--sub:#e2aab8;--accent:#ff7b9e;--accent2:#5a2a37;color-scheme:dark}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font-family:"Tajawal","Segoe UI",Tahoma,sans-serif;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box}
+.card{background:var(--card);border-radius:24px;padding:30px 20px;max-width:380px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(224,87,122,.2)}
+.emoji{font-size:50px}
+h1{font-size:23px;margin:12px 0 8px}
+p{color:var(--sub);line-height:1.9;margin:8px 0 18px;font-size:16px}
+.q{color:var(--text);font-weight:700;margin:6px 0 14px;font-size:18px}
+button{font-family:inherit;border:0;cursor:pointer}
+.btns{display:flex;gap:12px;justify-content:center;align-items:center;min-height:64px}
+.yes{background:var(--accent);color:#fff;font-weight:700;font-size:17px;border-radius:14px;padding:13px 24px;transition:transform .2s}
+.no{background:var(--accent2);color:var(--sub);font-size:17px;border-radius:14px;padding:13px 24px;transition:transform .2s}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.day{font-size:18px;font-weight:700;border-radius:14px;padding:14px 0;background:var(--accent2);color:var(--text)}
+.day small{display:block;font-size:12px;font-weight:400;color:var(--sub)}
+.msg{min-height:30px;margin-top:14px;color:var(--accent);font-weight:700}
+.shake{animation:sh .35s}
+@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.opt{font-size:17px;border-radius:16px;padding:16px 8px;background:var(--accent2);color:var(--text);border:2px solid transparent}
+.opt.on{border-color:var(--accent);background:var(--card);font-weight:700}
+.go{width:100%;background:var(--accent);color:#fff;font-weight:700;font-size:17px;border-radius:14px;padding:14px;opacity:.45}
+.go.ready{opacity:1}
+.sum{background:var(--accent2);border-radius:16px;padding:14px;margin:6px 0 14px;font-weight:700;line-height:1.9}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="card" id="s1">
+  <div class="emoji">🥺</div>
+  <h1>حبيبتي علا 💗</h1>
+  <p>ما أحب نكون زعلانين، والمشاكل صارت من الطرفين. تعالي نصافي ونطلع نغيّر جو.</p>
+  <div class="q">تطلعين وياي ديت؟ 💗</div>
+  <div class="btns">
+    <button class="yes" id="yes">إي أكيد 💗</button>
+    <button class="no" id="no">لا</button>
+  </div>
+</div>
+
+<div class="card hidden" id="s2">
+  <div class="emoji">📅</div>
+  <h1>يلا، اختاري اليوم</h1>
+  <p>شوفي اليوم اللي يعجبج:</p>
+  <div class="grid" id="grid"></div>
+  <div class="msg" id="msg"></div>
+</div>
+
+<div class="card hidden" id="s2t">
+  <div class="emoji">⏰</div>
+  <h1>الساعة شكد؟</h1>
+  <p>اختاري الوكت اللي يناسبج للطلعة:</p>
+  <div class="grid" id="tgrid"></div>
+</div>
+
+<div class="card hidden" id="s3">
+  <div class="emoji">✨</div>
+  <h1>حلو، يوم 12/12 موعدنا</h1>
+  <p>هسه شنو تحبين نسوي؟ تكدرين تختارين أكثر من شي:</p>
+  <div class="opts" id="opts"></div>
+  <button class="go" id="go">تمام 💞</button>
+</div>
+
+<div class="card hidden" id="s4">
+  <div class="emoji">🎉💞</div>
+  <h1>عاشت ايدج علا!</h1>
+  <div class="sum" id="sum"></div>
+  <p>صوّري الشاشة وابعثيها إلي 📸</p>
+</div>
+
+<script>
+function show(id){['s1','s2','s2t','s3','s4'].forEach(function(x){document.getElementById(x).classList.toggle('hidden',x!==id)})}
+
+// step 1
+var no=document.getElementById('no'),yes=document.getElementById('yes'),k=0;
+var nm=['لا؟ متأكدة؟','فكري مرة ثانية 🥹','ترا أزعل!','ادبسز دوسي اي','هاااا مو راح اموتج 🔪🔪','بداعت سوزي','يلا كولي إي'];
+function dodge(e){e.preventDefault();k++;no.textContent=nm[(k-1)%nm.length];
+  yes.style.transform='scale('+Math.min(1+k*0.12,1.7)+')';
+  no.style.transform='translate('+(Math.random()*140-70)+'px,'+(Math.random()*60-30)+'px)'}
+no.addEventListener('click',dodge);
+no.addEventListener('touchstart',dodge,{passive:false});
+yes.addEventListener('click',function(){show('s2')});
+
+// step 2
+var days=[8,9,10,11,12,13,14,15,16],grid=document.getElementById('grid'),msg=document.getElementById('msg'),n=0;
+var msgs=['هذا اليوم ما يصير، آني مشغول 😅','لا لا، جربي يوم ثاني','ههههه حاولي مرة ثانية','هذا اليوم عندي موعد وياج بس مو هذا 😂','قلبي، اختاري غيره 🥹','أمممم، شكلج تدورين على اليوم الصح 😉'];
+days.forEach(function(d){
+  var b=document.createElement('button');
+  b.className='day';b.innerHTML=d+'<small>ديسمبر</small>';
+  b.addEventListener('click',function(){
+    if(d===12){show('s2t')}
+    else{msg.textContent=msgs[n%msgs.length];n++;
+      b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}
+  });
+  grid.appendChild(b);
+});
+
+// time step
+var times=[['12:00','ظهراً'],['2:00','عصراً'],['4:00','عصراً'],['6:00','مساءً'],['8:00','مساءً'],['10:00','مساءً']],tg=document.getElementById('tgrid'),chosenTime='';
+times.forEach(function(t){
+  var b=document.createElement('button');
+  b.className='day';b.innerHTML=t[0]+'<small>'+t[1]+'</small>';
+  b.addEventListener('click',function(){chosenTime=t[0]+' '+t[1];show('s3')});
+  tg.appendChild(b);
+});
+
+// step 3
+var items=['☕ كهوة','🍽️ عشا','🌆 مشوار','🎬 سينما'],picked={},opts=document.getElementById('opts'),go=document.getElementById('go');
+function count(){return Object.keys(picked).length}
+items.forEach(function(t){
+  var b=document.createElement('button');b.className='opt';b.textContent=t;
+  b.addEventListener('click',function(){
+    if(picked[t]){delete picked[t];b.classList.remove('on')}else{picked[t]=1;b.classList.add('on')}
+    go.classList.toggle('ready',count()>0);
+  });
+  opts.appendChild(b);
+});
+go.addEventListener('click',function(){
+  if(!count())return;
+  document.getElementById('sum').innerHTML='ديت يوم 12/12 📅<br>الساعة '+chosenTime+' ⏰<br>'+Object.keys(picked).join(' + ');
+  show('s4');
+});
+</script>
+</body>
+</html>
